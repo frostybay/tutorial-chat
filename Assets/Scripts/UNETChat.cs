@@ -5,7 +5,7 @@ using UnityEngine.Networking.NetworkSystem;
 public class UNETChat : Chat
 {
 	//just a random number
-	public const short chatMessage = 131;
+	private const short chatMessage = 131;
 
 	private void Start()
 	{
