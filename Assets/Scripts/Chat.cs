@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
+using System.Collections;
 
 public class Chat : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Chat : MonoBehaviour
 
 	[SerializeField]
 	private Text container;
+	[SerializeField]
+	private ScrollRect rect;
 
 	private void Start()
 	{
@@ -40,6 +43,9 @@ public class Chat : MonoBehaviour
 		string messageText = message.ReadMessage<StringMessage> ().value;
 		//adding message to chat
 		container.text += "\n" + messageText;
+
+		//just a hack to jump a frame and scrolldown the chat
+		Invoke("ScrollDown", .1f);
 	}
 
 	public void SendMessage(InputField input)
@@ -50,5 +56,11 @@ public class Chat : MonoBehaviour
 
 		//sending to server
 		NetworkManager.singleton.client.Send (chatMessage, myMessage);
+	}
+
+	private void ScrollDown()
+	{
+		if (rect != null)
+			rect.verticalScrollbar.value = 0;
 	}
 }
